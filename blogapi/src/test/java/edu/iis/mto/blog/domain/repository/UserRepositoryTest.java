@@ -1,5 +1,6 @@
 package edu.iis.mto.blog.domain.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
@@ -32,6 +33,7 @@ public class UserRepositoryTest {
     public void setUp() {
         user = new User();
         user.setFirstName("Jan");
+        user.setLastName("Kowalski");
         user.setEmail("john@domain.com");
         user.setAccountStatus(AccountStatus.NEW);
     }
@@ -59,6 +61,34 @@ public class UserRepositoryTest {
         User persistedUser = repository.save(user);
 
         Assert.assertThat(persistedUser.getId(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void shouldFindUserByFirstName(){
+        repository.save(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("jan","x","x");
+        Assert.assertTrue(users.contains(user));
+    }
+
+    @Test
+    public void shouldFindUserByLastName(){
+        repository.save(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("x","kowalski","x");
+        Assert.assertTrue(users.contains(user));
+    }
+
+    @Test
+    public void shouldFindUserByEmail(){
+        repository.save(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("x","x","john@domain.com");
+        Assert.assertTrue(users.contains(user));
+    }
+
+    @Test
+    public void shouldntFindAnyUser(){
+        repository.save(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("Dawid","Nowak","david@domain.com");
+        Assert.assertFalse(users.contains(user));
     }
 
 }
