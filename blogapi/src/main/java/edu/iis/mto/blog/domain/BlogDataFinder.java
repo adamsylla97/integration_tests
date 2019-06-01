@@ -18,6 +18,8 @@ import edu.iis.mto.blog.dto.UserData;
 import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.DataFinder;
 
+import javax.persistence.EntityNotFoundException;
+
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 @Service
 public class BlogDataFinder extends DomainService implements DataFinder {
@@ -30,7 +32,8 @@ public class BlogDataFinder extends DomainService implements DataFinder {
     @Override
     public UserData getUserData(Long userId) {
         User user = userRepository.findById(userId)
-                                  .orElseThrow(domainError(DomainError.USER_NOT_FOUND));
+                                  //.orElseThrow(domainError(DomainError.USER_NOT_FOUND));
+                                .orElseThrow(EntityNotFoundException::new);
 
         return mapper.mapToDto(user);
     }
