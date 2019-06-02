@@ -192,9 +192,25 @@ public class AdditionalRestApiTests extends FunctionalTests {
 
     }
 
-    @Ignore
+    public static final String USER_SEARCH = "/blog/user/find?searchString=";
+
     @Test
     public void lookingForUsersShouldntReturnDeletedUsers(){
+
+        JSONObject jsonObj = new JSONObject();
+
+        RestAssured.given()
+                   .accept(ContentType.JSON)
+                   .header("Content-Type", "application/json;charset=UTF-8")
+                   .body(jsonObj.toString())
+                   .expect()
+                   .log()
+                   .all()
+                   .statusCode(HttpStatus.SC_OK)
+                   .and()
+                   .body("size()", CoreMatchers.is(1))
+                   .when()
+                   .get(USER_SEARCH + "Dawid");
 
     }
 
