@@ -2,5 +2,5 @@
 insert into user (account_status, email, first_name, last_name) values ('CONFIRMED', 'john@domain.com', 'John', 'Steward')
 insert into user (account_status, email, first_name) values ('NEW', 'brian@domain.com', 'Brian')
 insert into user (account_status, email, first_name, last_name) values ('NEW', 'jan@domain.com', 'Jan', 'Kowalski')
-insert into user (account_status, email, first_name, last_name) values ('REMOVED', 'dawid@domain.com', "Dawid", 'Nowak')
+insert into user (account_status, email, first_name, last_name) values ('REMOVED', 'dawid@domain.com', 'Dawid', 'Nowak')
 insert into user (account_status, email, first_name, last_name) values ('NEW', 'aaa@bbb.com', 'Dawid', 'aaavv')

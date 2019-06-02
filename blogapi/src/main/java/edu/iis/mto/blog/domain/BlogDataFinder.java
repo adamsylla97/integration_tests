@@ -1,6 +1,7 @@
 package edu.iis.mto.blog.domain;
 
 import edu.iis.mto.blog.domain.errors.DomainError;
+import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.BlogPost;
 import edu.iis.mto.blog.domain.model.User;
 import edu.iis.mto.blog.domain.repository.BlogPostRepository;
@@ -42,6 +43,7 @@ public class BlogDataFinder extends DomainService implements DataFinder {
                 searchString, searchString);
 
         return users.stream()
+                    .filter(e -> e.getAccountStatus() != AccountStatus.REMOVED  )
                     .map(mapper::mapToDto)
                     .collect(Collectors.toList());
     }
