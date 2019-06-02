@@ -1,13 +1,5 @@
 package edu.iis.mto.blog.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import edu.iis.mto.blog.domain.model.AccountStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.iis.mto.blog.domain.errors.DomainError;
 import edu.iis.mto.blog.domain.model.BlogPost;
 import edu.iis.mto.blog.domain.model.User;
@@ -18,8 +10,13 @@ import edu.iis.mto.blog.dto.PostData;
 import edu.iis.mto.blog.dto.UserData;
 import edu.iis.mto.blog.mapper.BlogDataMapper;
 import edu.iis.mto.blog.services.DataFinder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 @Service
@@ -60,10 +57,6 @@ public class BlogDataFinder extends DomainService implements DataFinder {
     public List<PostData> getUserPosts(Long userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(domainError(DomainError.USER_NOT_FOUND));
-
-        if(user.getAccountStatus() == AccountStatus.REMOVED){
-            throw new DomainError(DomainError.USER_REMOVED);
-        }
 
         List<BlogPost> posts = blogPostRepository.findByUser(user);
         return posts.stream()

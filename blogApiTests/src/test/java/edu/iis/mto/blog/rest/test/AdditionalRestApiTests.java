@@ -31,7 +31,7 @@ public class AdditionalRestApiTests extends FunctionalTests {
     private static final String POST_API_CONFIRMED = "blog/user/1/post";
     private static final String POST_API_NEW = "blog/user/3/post";
 
-    @Ignore
+
     @Test
     public void userWithStatusNewShoudntBeAbleToAddPost(){
         JSONObject jsonObj = new JSONObject().put("entry", "Test");
@@ -43,7 +43,7 @@ public class AdditionalRestApiTests extends FunctionalTests {
                    .expect()
                    .log()
                    .all()
-                   .statusCode(HttpStatus.SC_CONFLICT)
+                   .statusCode(HttpStatus.SC_BAD_REQUEST)
                    .when()
                    .post(POST_API_NEW);
     }
